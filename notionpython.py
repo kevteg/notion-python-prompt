@@ -1,16 +1,27 @@
+import os
+import logging
+
+logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 from notion_client import Client
 
 
 class NotionPython:
 
     prompt = ">>>"
+    """
+    TODO: clean page
+    """
 
     def __init__(self, token, page_id):
         """
+        token: token to access the integration
         page_id: page to be used as the python 'interpreter'
         """
         self.notion = Client(auth=token)
         self.page_id = page_id
+
+    def clean_page(self):
+        logging.info("cleaning page")
 
     def page_children(self):
         # a page is a block in notion
@@ -41,10 +52,19 @@ class NotionPython:
     def eval_code(self):
         children = self.page_children()
         code = self.get_code(children)
-        result = str(eval(code))
-        result = result.replace("\n", "")
-        print(result)
-        self.add_result(result)
+        try:
+            logging.info("Last line found on notion: ")
+            logging.info(code)
+            result = str(eval(code))
+            result = result.replace("\n", "")
+            logging.info("Sending result back to notion page")
+            logging.info("Result:")
+            logging.info(result)
+            self.add_result(result)
+        except Exception as e:
+            logging.info("Error running code, check it out!")
+            logging.info(e)
+
 
     def add_result(self, result):
         """adds the result and the prompt"""
