@@ -21,7 +21,12 @@ class NotionPython:
         self.page_id = page_id
 
     def clean_page(self):
-        logging.info("cleaning page")
+        logging.info("Removing entries")
+        children = self.page_children()
+        for child in children:
+            self.notion.blocks.delete(block_id=child["id"])
+        self.add_prompt()
+        logging.info("Page cleaned")
 
     def page_children(self):
         # a page is a block in notion
@@ -45,7 +50,9 @@ class NotionPython:
                     content = text.get("plain_text", "")
                 if content.startswith(self.prompt):
                     code = content.strip(self.prompt)
-                    code = code.replace("Ó", "'")
+                    # Replacing the most common unicode quotation marks
+                    code = code.replace(u"\u201C", "'")
+                    code = code.replace(u"\u201D", "'")
                     break
         return code
 
@@ -67,7 +74,7 @@ class NotionPython:
 
 
     def add_result(self, result):
-        """adds the result and the prompt"""
+        """appends the result and the prompt"""
         children = [
             {
                 "object": "block",
@@ -99,6 +106,30 @@ class NotionPython:
             },
         ]
 
+        return self.__add_children(children)
+
+    def add_prompt(self):
+        """appends the prompt"""
+        children = [
+            {
+                "object": "block",
+                "type": "paragraph",
+                "paragraph": {
+                    "text": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": self.prompt,
+                            },
+                        },
+                    ],
+                },
+            },
+        ]
+
+        return self.__add_children(children)
+
+    def __add_children(self, children):
         return self.notion.blocks.children.append(
             block_id=self.page_id, children=children
         )
