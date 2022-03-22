@@ -26,3 +26,7 @@ docker run -it -v $(pwd):/usr/src/app notion python  pynotion.py -t INTEGRATION_
 ```
 
 **Note**: Every time you add something to the page you need to run the command to update it with the result. Unfortunately it is not real time :(
+
+## Warning
+
+This is making use of the [eval](https://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html) function so be careful with whom you share your notion page!
