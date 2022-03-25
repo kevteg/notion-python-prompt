@@ -37,7 +37,8 @@ class NotionPython:
         logging.info("Removing entries")
         children = self.page_children()
         for child in children:
-            self.notion.blocks.delete(block_id=child["id"])
+            if child.get("type") == "paragraph":
+                self.notion.blocks.delete(block_id=child["id"])
         self.add_prompt()
         logging.info("Page cleaned")
 
