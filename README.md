@@ -1,11 +1,15 @@
-# Notion Python intepreter
+# Notion Python prompt! 
+
 
 This is just a proof of concept. The idea is to render python code inside of a notion page using the new notion API. Just for fun!
+
+<img width="800" alt="Quick demo" src="https://user-images.githubusercontent.com/5288503/160199145-b3ae51cf-f1a5-4601-8773-bb707012a8a7.gif">
+
 
 ## Seting up the notion page
 
 - Create a new [notion integration](https://developers.notion.com/docs/getting-started#step-1-create-an-integration)
-- Create a copy of [this page](https://keeeevin.notion.site/Python-Interpreter-ed5eb08d626442f4ac7c9ae6d60d30ff) in your workspace
+- Create a copy of [this page](https://keeeevin.notion.site/Python-Prompt-ed5eb08d626442f4ac7c9ae6d60d30ff) in your workspace
 - Make sure to share your new page with your integration:
 <img width="427" alt="Screen_Shot_2022-03-22_at_4_52_14_PM" src="https://user-images.githubusercontent.com/5288503/159582677-c1d4c2f5-2d07-44fe-92a1-34ef524f1d20.png">
 
