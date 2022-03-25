@@ -53,4 +53,4 @@ The page is cleaned
 
 - This is making use of the [eval](https://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html) function so be careful with whom you share your notion page! They could do something like this (or worst):
 ![image](https://user-images.githubusercontent.com/5288503/160207635-00ae8260-2172-4b7b-8295-9857dcdb181c.png)
-- This "propmpt" can't run any _complex code_ such as classes or method definitions 
+- This "prompt" can't run any _complex code_ such as classes or method definitions 
