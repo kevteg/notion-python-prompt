@@ -26,11 +26,31 @@ docker build . -t notion
 
 - Run the command, make sure you have the integration token and the page ID 
 ```
-docker run -it -v $(pwd):/usr/src/app notion python  pynotion.py -t INTEGRATION_TOKEN -p PAGE_ID
+docker run -it -v $(pwd):/usr/src/app notion python pynotion.py -t INTEGRATION_TOKEN -p PAGE_ID
 ```
 
 **Note**: Every time you add something to the page you need to run the command to update it with the result. Unfortunately it is not real time :(
 
+## Available commands
+
+### Run code: (Default)
+
+The last text found on your page is processed as Python code and the result is appended to the page
+
+```
+... pynotion -t INTEGRATION_TOKEN -p PAGE_ID -c run
+```
+
+### Clean page: 
+
+The page is cleaned
+
+```
+... pynotion -t INTEGRATION_TOKEN -p PAGE_ID -c clean
+```
+
 ## Warning
 
-This is making use of the [eval](https://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html) function so be careful with whom you share your notion page!
+- This is making use of the [eval](https://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html) function so be careful with whom you share your notion page! They could do something like this (or worst):
+![image](https://user-images.githubusercontent.com/5288503/160207635-00ae8260-2172-4b7b-8295-9857dcdb181c.png)
+- This "propmpt" can't run any _complex code_ such as classes or method definitions 
