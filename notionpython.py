@@ -1,8 +1,8 @@
-import os
+from notion_client import Client
 import logging
 
-logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
-from notion_client import Client
+
+logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
 
 
 class NotionPython:
@@ -21,7 +21,7 @@ class NotionPython:
                     },
                 },
             ],
-        "color": "green",
+            "color": "green",
         },
     }
 
@@ -89,7 +89,6 @@ class NotionPython:
             logging.info("Error running code, check it out!")
             logging.info(e)
 
-
     def add_result(self, result):
         """appends the result and the prompt"""
         children = [
@@ -108,16 +107,14 @@ class NotionPython:
                     "color": "green",
                 },
             },
-            self.prompt_child
+            self.prompt_child,
         ]
 
         return self.__add_children(children)
 
     def add_prompt(self):
         """appends the prompt"""
-        children = [
-            self.prompt_child 
-        ]
+        children = [self.prompt_child]
 
         return self.__add_children(children)
 
