@@ -8,9 +8,22 @@ from notion_client import Client
 class NotionPython:
 
     prompt = ">>>"
-    """
-    TODO: clean page
-    """
+
+    prompt_child = {
+        "object": "block",
+        "type": "paragraph",
+        "paragraph": {
+            "rich_text": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": prompt,
+                    },
+                },
+            ],
+        "color": "green",
+        },
+    }
 
     def __init__(self, token, page_id):
         """
@@ -62,12 +75,15 @@ class NotionPython:
         try:
             logging.info("Last line found on notion: ")
             logging.info(code)
-            result = str(eval(code))
-            result = result.replace("\n", "")
-            logging.info("Sending result back to notion page")
-            logging.info("Result:")
-            logging.info(result)
-            self.add_result(result)
+            if code:
+                result = str(eval(code))
+                result = result.replace("\n", "")
+                logging.info("Sending result back to notion page")
+                logging.info("Result:")
+                logging.info(result)
+                self.add_result(result)
+            else:
+                logging.info("Nothing to add")
         except Exception as e:
             logging.info("Error running code, check it out!")
             logging.info(e)
@@ -88,22 +104,10 @@ class NotionPython:
                             },
                         },
                     ],
+                    "color": "green",
                 },
             },
-            {
-                "object": "block",
-                "type": "paragraph",
-                "paragraph": {
-                    "text": [
-                        {
-                            "type": "text",
-                            "text": {
-                                "content": self.prompt,
-                            },
-                        },
-                    ],
-                },
-            },
+            self.prompt_child
         ]
 
         return self.__add_children(children)
@@ -111,20 +115,7 @@ class NotionPython:
     def add_prompt(self):
         """appends the prompt"""
         children = [
-            {
-                "object": "block",
-                "type": "paragraph",
-                "paragraph": {
-                    "text": [
-                        {
-                            "type": "text",
-                            "text": {
-                                "content": self.prompt,
-                            },
-                        },
-                    ],
-                },
-            },
+            self.prompt_child 
         ]
 
         return self.__add_children(children)
